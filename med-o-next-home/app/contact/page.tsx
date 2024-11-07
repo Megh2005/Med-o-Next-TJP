@@ -1,6 +1,7 @@
 // pages/contact.tsx
 "use client";
-import { useState } from "react";
+import { submitContactForm } from "@/lib/actions/submitContactForm";
+import { useEffect, useState } from "react";
 
 type StatesAndCitiesType = {
   [country: string]: {
@@ -65,12 +66,66 @@ export default function Contact() {
     keyof (typeof statesAndCities)["India"] | ""
   >("");
   const [cities, setCities] = useState<string[]>([]);
+  const [submitting, setSubmitting] = useState(false);
 
   const handleStateChange = (
     state: keyof (typeof statesAndCities)["India"]
   ) => {
     setSelectedState(state);
     setCities(statesAndCities["India"][state] || []);
+  };
+
+  const [formData, setFormData] = useState({
+    name: "",
+    gender: "",
+    contactNumber: "",
+    email: "",
+    state: selectedState,
+    city: "",
+    address: "",
+  });
+
+  useEffect(() => {
+    if (selectedState) {
+      setFormData({
+        ...formData,
+        state: selectedState,
+      });
+    }
+  }, [selectedState]);
+
+  const handleFormSubmit = async () => {
+    if (
+      !formData.name ||
+      !formData.gender ||
+      !formData.contactNumber ||
+      !formData.email ||
+      !formData.state ||
+      !formData.city ||
+      !formData.address
+    ) {
+      alert("Please fill all the fields");
+      return;
+    }
+
+    setSubmitting(true);
+    const res = await submitContactForm(formData);
+    if (res.success) {
+      alert(res.message);
+      setFormData({
+        name: "",
+        gender: "",
+        contactNumber: "",
+        email: "",
+        state: "",
+        city: "",
+        address: "",
+      });
+      setSelectedState("");
+    } else {
+      alert(res.message);
+    }
+    setSubmitting(false);
   };
 
   return (
@@ -81,6 +136,10 @@ export default function Contact() {
           <div>
             <label className="block text-sm font-medium mb-1">Name</label>
             <input
+              value={formData.name}
+              onChange={(e) =>
+                setFormData({ ...formData, name: e.target.value })
+              }
               type="text"
               className="w-full px-4 py-2 bg-gray-700 rounded-md text-white"
               placeholder="Enter your name"
@@ -88,7 +147,13 @@ export default function Contact() {
           </div>
           <div>
             <label className="block text-sm font-medium mb-1">Gender</label>
-            <select className="w-full px-4 py-2 bg-gray-700 rounded-md text-white">
+            <select
+              value={formData.gender}
+              onChange={(e) =>
+                setFormData({ ...formData, gender: e.target.value })
+              }
+              className="w-full px-4 py-2 bg-gray-700 rounded-md text-white"
+            >
               <option value="">Select gender</option>
               <option value="Male">Male</option>
               <option value="Female">Female</option>
@@ -100,7 +165,11 @@ export default function Contact() {
               Contact Number
             </label>
             <input
-              type="tel"
+              value={formData.contactNumber}
+              onChange={(e) =>
+                setFormData({ ...formData, contactNumber: e.target.value })
+              }
+              type="number"
               className="w-full px-4 py-2 bg-gray-700 rounded-md text-white"
               placeholder="Enter your contact number"
             />
@@ -108,6 +177,10 @@ export default function Contact() {
           <div>
             <label className="block text-sm font-medium mb-1">Email</label>
             <input
+              value={formData.email}
+              onChange={(e) =>
+                setFormData({ ...formData, email: e.target.value })
+              }
               type="email"
               className="w-full px-4 py-2 bg-gray-700 rounded-md text-white"
               placeholder="Enter your email"
@@ -137,6 +210,10 @@ export default function Contact() {
             <select
               className="w-full px-4 py-2 bg-gray-700 rounded-md text-white"
               disabled={!selectedState}
+              value={formData.city}
+              onChange={(e) =>
+                setFormData({ ...formData, city: e.target.value })
+              }
             >
               <option value="">
                 {selectedState ? "Select a city" : "Select a state first"}
@@ -154,14 +231,23 @@ export default function Contact() {
               className="w-full px-4 py-2 bg-gray-700 resize-none rounded-md text-white"
               placeholder="Enter your message"
               rows={6}
+              value={formData.address}
+              onChange={(e) =>
+                setFormData({ ...formData, address: e.target.value })
+              }
             />
           </div>
           <div className="text-center">
             <button
+              onClick={(e) => {
+                e.preventDefault();
+                handleFormSubmit();
+              }}
+              disabled={submitting}
               type="submit"
               className="text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-xl px-8 py-2 text-center me-2 mb-2"
             >
-              Submit
+              {submitting ? "Submitting..." : "Submit"}
             </button>
           </div>
         </form>
