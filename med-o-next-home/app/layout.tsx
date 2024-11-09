@@ -25,6 +25,17 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="dark">
+      <head>
+        <link
+          rel="shortcut icon"
+          href="https://res.cloudinary.com/djyk287ep/image/upload/v1731136697/Designer_1_a8jhf2.png"
+          type="image/x-icon"
+        />
+        <link
+          rel="apple-touch-icon"
+          href="https://res.cloudinary.com/djyk287ep/image/upload/v1731136697/Designer_1_a8jhf2.png"
+        />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >

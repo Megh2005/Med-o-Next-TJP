@@ -54,27 +54,27 @@ export default function HeroParallaxDemo() {
 }
 export const products = [
   {
-    title: "Session 0",
-    link: "",
+    title: "Med-o-Chat",
+    link: "http://med-o-chat-snowy.vercel.app",
     thumbnail:
-      "https://res.cloudinary.com/dfdbvvapa/image/upload/v1730129514/SESSION_0_ixkprk.png",
+      "https://res.cloudinary.com/djyk287ep/image/upload/v1731157645/chat_zsx2ld.png",
   },
   {
-    title: "ML Churn",
-    link: "https://algochurn.com",
+    title: "Med-o-AI",
+    link: "http://med-o-ai.vercel.app",
     thumbnail:
-      "https://res.cloudinary.com/dfdbvvapa/image/upload/v1730131019/ML_pbl7f2.png",
+      "https://res.cloudinary.com/djyk287ep/image/upload/v1731157798/ai_zx3stc.png",
   },
   {
-    title: "Aceternity UI",
-    link: "https://ui.aceternity.com",
+    title: "Med-o-Shop",
+    link: "http://med-o-shop-1.onrender.com",
     thumbnail:
-      "https://aceternity.com/images/products/thumbnails/new/aceternityui.png",
+      "https://res.cloudinary.com/djyk287ep/image/upload/v1731157900/shop_mfii9r.png",
   },
   {
-    title: "E Free Invoice",
-    link: "https://efreeinvoice.com",
+    title: "Med-o-Manage",
+    link: "#",
     thumbnail:
-      "https://aceternity.com/images/products/thumbnails/new/efreeinvoice.png",
+      "https://res.cloudinary.com/djyk287ep/image/upload/v1731158429/Manage_ybshqq.png",
   },
 ];

@@ -112,7 +112,7 @@ export const Header = () => {
         designed to cater to every healthcare need in one place. Imagine booking
         doctor appointments with ease, engaging in live video consultations, and
         ordering prescribed medications all through a single platform. But
-        that’s just the beginning!
+        that&apos;s just the beginning!
       </p>
     </div>
   );
