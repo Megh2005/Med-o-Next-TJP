@@ -2,7 +2,6 @@
 import React from "react";
 import { HeroParallax } from "../components/ui/hero-parallax";
 import { FloatingNav } from "@/components/ui/floating-navbar";
-import Footer from "@/components/Footer";
 import {
   CalendarIcon,
   HandshakeIcon,
