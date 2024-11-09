@@ -49,13 +49,15 @@ const Page = () => {
 
   const nameItems = [
     {
-      title: "Health Check",
-      description: "Schedule routine health check-ups with certified professionals.",
+      title: "Med-o-Chat",
+      description:
+        "Real-time medical consultations with certified doctors. Schedule video consultations for in-depth discussions. Share images and reports during chat for precise medical advice.New! Message history for better follow-up and patient-doctor communication.",
       link: "https://example.com/health-check",
     },
     {
       title: "Wellness Programs",
-      description: "Discover personalized wellness programs tailored to your needs.",
+      description:
+        "Discover personalized wellness programs tailored to your needs.",
       link: "https://example.com/wellness-programs",
     },
     {
@@ -79,7 +81,11 @@ const Page = () => {
         {/* Desktop Navbar */}
         <div className="hidden md:flex space-x-6">
           {navItems.map((item, index) => (
-            <Link key={index} href={item.link} className="flex items-center gap-2 text-white">
+            <Link
+              key={index}
+              href={item.link}
+              className="flex items-center gap-2 text-white"
+            >
               {item.icon}
               <span>{item.name}</span>
             </Link>
@@ -88,7 +94,11 @@ const Page = () => {
 
         {/* Hamburger Icon for Mobile */}
         <button className="md:hidden text-white" onClick={toggleMenu}>
-          {isMenuOpen ? <XIcon className="w-6 h-6" /> : <MenuIcon className="w-6 h-6" />}
+          {isMenuOpen ? (
+            <XIcon className="w-6 h-6" />
+          ) : (
+            <MenuIcon className="w-6 h-6" />
+          )}
         </button>
       </nav>
 
@@ -96,7 +106,11 @@ const Page = () => {
       {isMenuOpen && (
         <div className="md:hidden flex flex-col items-center bg-black rounded-lg p-4 space-y-4 w-3/4">
           {navItems.map((item, index) => (
-            <Link key={index} href={item.link} className="flex items-center gap-2 text-white">
+            <Link
+              key={index}
+              href={item.link}
+              className="flex items-center gap-2 text-white"
+            >
               {item.icon}
               <span>{item.name}</span>
             </Link>
