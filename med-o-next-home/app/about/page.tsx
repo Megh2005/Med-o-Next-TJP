@@ -90,13 +90,35 @@ export default function HeroHighlightDemo() {
       <Navbar /> {/* Add the Navbar here */}
       <HeroHighlight>
         <h1 className="text-2xl px-4 md:text-4xl lg:text-5xl font-bold text-neutral-700 dark:text-white max-w-4xl leading-relaxed lg:leading-snug text-center mx-auto ">
-          With insomnia, nothing&apos;s real. Everything is far away. Everything
-          is a
-          <br/>
+          Welcome to
+          <br />
           <Highlight className="text-black dark:text-white">
-            copy, of a copy, of a copy.
+            Tech Janta Party
           </Highlight>
         </h1>
+        <div className="flex flex-col items-center justify-center">
+          <p className="text-balance text-center max-w-xl text-xl my-4">
+            {" "}
+            We&apos;re a dynamic team of tech enthusiasts and problem-solvers
+            united by a shared vision: to build innovative, accessible, and
+            people-focused digital solutions. Comprising Megh Deb as our Team
+            Lead, Subham Mani as our Web Developer, Sayambar Roy Chowdhury as
+            our AI/ML Developer, and Ronit Bose as our Backend and Web3
+            Developer, we bring diverse expertise and passion for making
+            technology work for everyone.
+          </p>
+          <p className="text-xl text-center my-4 max-w-5xl">
+            At Tech Janta Party, we believe that technology should empower
+            individuals and communities. Our latest project,{" "}
+            <Highlight>Med-o-Next</Highlight>, is the perfect embodiment of this
+            philosophy. MED-O-NEXT is a comprehensive medical web application
+            designed to transform the healthcare experience by seamlessly
+            integrating multiple essential services into one platform. Imagine
+            booking doctor appointments with ease, engaging in live video
+            consultations, and ordering prescribed medications—all through a
+            single, user-friendly app.
+          </p>
+        </div>
       </HeroHighlight>
     </div>
   );
