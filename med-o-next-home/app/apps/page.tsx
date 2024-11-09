@@ -52,17 +52,17 @@ const Page = () => {
       title: "Med-o-Chat",
       description:
         "Real-time medical consultations with certified doctors. Schedule video consultations for in-depth discussions. Share images and reports during chat for precise medical advice.New! Message history for better follow-up and patient-doctor communication.",
-      link: "https://example.com/health-check",
+      link: "http://med-o-chat-snowy.vercel.app",
     },
     {
-      title: "Wellness Programs",
+      title: "Med-o-Shop",
       description:
-        "Discover personalized wellness programs tailored to your needs.",
-      link: "https://example.com/wellness-programs",
+        "Directly order authentic medications from certified manufacturers.Automatic refill reminders based on prescriptions.Transparent pricing and home delivery options available for every user.Discounted rates for long-term prescriptions and bulk orders.",
+      link: "http://med-o-shop-1.onrender.com",
     },
     {
-      title: "Consultation Services",
-      description: "Book online consultations with top medical experts.",
+      title: "Med-o-AI",
+      description: "Get instant answers to medical queries with our AI-driven assistant.Extensive knowledge base for reliable and accurate medical information.Personalize the AI responses based on user health history and preferences.",
       link: "https://example.com/consultation-services",
     },
     {
@@ -109,6 +109,7 @@ const Page = () => {
             <Link
               key={index}
               href={item.link}
+              target="_blank"
               className="flex items-center gap-2 text-white"
             >
               {item.icon}
