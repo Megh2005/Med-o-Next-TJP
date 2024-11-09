@@ -50,7 +50,7 @@ export default function HeroParallaxDemo() {
     </div>
   );
 }
-export const products = [
+const products = [
   {
     title: "Med-o-Chat",
     link: "http://med-o-chat-snowy.vercel.app",
