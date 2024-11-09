@@ -48,7 +48,6 @@ export default function HeroParallaxDemo() {
     <div className="relative w-full">
       <FloatingNav navItems={navItems} />
       <HeroParallax products={products} />
-      {/* <Footer /> */}
     </div>
   );
 }
