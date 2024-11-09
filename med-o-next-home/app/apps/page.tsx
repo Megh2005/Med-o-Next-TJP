@@ -62,8 +62,9 @@ const Page = () => {
     },
     {
       title: "Med-o-AI",
-      description: "Get instant answers to medical queries with our AI-driven assistant.Extensive knowledge base for reliable and accurate medical information.Personalize the AI responses based on user health history and preferences.",
-      link: "https://example.com/consultation-services",
+      description:
+        "Get instant answers to medical queries with our AI-driven assistant.Extensive knowledge base for reliable and accurate medical information.Personalize the AI responses based on user health history and preferences.",
+      link: "http://med-o-ai.vercel.app",
     },
     {
       title: "Emergency Support",
@@ -109,7 +110,6 @@ const Page = () => {
             <Link
               key={index}
               href={item.link}
-              target="_blank"
               className="flex items-center gap-2 text-white"
             >
               {item.icon}
