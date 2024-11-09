@@ -2,6 +2,16 @@
 "use client";
 import { submitContactForm } from "@/lib/actions/submitContactForm";
 import { useEffect, useState } from "react";
+import {
+  CalendarIcon,
+  HandshakeIcon,
+  HomeIcon,
+  InfoIcon,
+  UsersIcon,
+  MenuIcon,
+  XIcon,
+} from "lucide-react";
+import Link from "next/link";
 
 type StatesAndCitiesType = {
   [country: string]: {
@@ -68,6 +78,37 @@ export default function Contact() {
   const [cities, setCities] = useState<string[]>([]);
   const [submitting, setSubmitting] = useState(false);
 
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const toggleMenu = () => setIsMenuOpen((prev) => !prev);
+
+  const navItems = [
+    {
+      name: "Home",
+      link: "/",
+      icon: <HomeIcon className="w-5 h-5 text-white" />,
+    },
+    {
+      name: "About Us",
+      link: "/about",
+      icon: <CalendarIcon className="w-5 h-5 text-white" />,
+    },
+    {
+      name: "Our Team",
+      link: "/team",
+      icon: <UsersIcon className="w-5 h-5 text-white" />,
+    },
+    {
+      name: "Our Apps",
+      link: "/apps",
+      icon: <InfoIcon className="w-5 h-5 text-white" />,
+    },
+    {
+      name: "Contact Us",
+      link: "/contact",
+      icon: <HandshakeIcon className="w-5 h-5 text-white" />,
+    },
+  ];
+
   const handleStateChange = (
     state: keyof (typeof statesAndCities)["India"]
   ) => {
@@ -129,30 +170,79 @@ export default function Contact() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-900 text-white">
-      <div className="w-full max-w-2xl p-8 bg-gray-900 rounded-lg shadow-lg">
-        <h2 className="text-2xl font-bold mb-6 text-center">Contact Us</h2>
-        <form className="space-y-4">
+    <div className="min-h-screen bg-gray-900 text-white">
+      {/* Fixed Navbar */}
+      <nav className="fixed top-0 left-0 right-0 p-4 bg-black shadow-md z-10">
+        <div className="flex justify-between items-center">
+          <span className="text-white font-bold text-lg">Med-o-Next</span>
+
+          {/* Desktop Navbar */}
+          <div className="hidden md:flex space-x-6">
+            {navItems.map((item, index) => (
+              <Link
+                key={index}
+                href={item.link}
+                className="flex items-center gap-2 text-white"
+              >
+                {item.icon}
+                <span>{item.name}</span>
+              </Link>
+            ))}
+          </div>
+
+          {/* Hamburger Icon for Mobile */}
+          <button className="md:hidden text-white" onClick={toggleMenu}>
+            {isMenuOpen ? (
+              <XIcon className="w-6 h-6" />
+            ) : (
+              <MenuIcon className="w-6 h-6" />
+            )}
+          </button>
+        </div>
+
+        {/* Mobile Dropdown Menu */}
+        {isMenuOpen && (
+          <div className="md:hidden flex flex-col items-center bg-black rounded-lg p-4 space-y-4 w-3/4 mt-4">
+            {navItems.map((item, index) => (
+              <Link
+                key={index}
+                href={item.link}
+                className="flex items-center gap-2 text-white"
+              >
+                {item.icon}
+                <span>{item.name}</span>
+              </Link>
+            ))}
+          </div>
+        )}
+      </nav>
+
+      {/* Contact Form (Centered) */}
+      <div className="w-full max-w-lg p-8 bg-gray-800 rounded-xl shadow-lg mx-auto mt-24">
+        <h2 className="text-3xl font-semibold mb-6 text-center text-gradient bg-clip-text text-transparent bg-gradient-to-br from-purple-600 to-blue-500">
+          Contact Us
+        </h2>
+        <form className="space-y-6">
           <div>
-            <label className="block text-sm font-medium mb-1">Name</label>
+            <label className="block text-lg font-medium mb-2">Name</label>
             <input
               value={formData.name}
               onChange={(e) =>
                 setFormData({ ...formData, name: e.target.value })
               }
               type="text"
-              className="w-full px-4 py-2 bg-gray-700 rounded-md text-white"
+              className="w-full px-5 py-3 bg-gray-700 rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="Enter your name"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium mb-1">Gender</label>
+            <label className="block text-lg font-medium mb-2">Gender</label>
             <select
               value={formData.gender}
               onChange={(e) =>
                 setFormData({ ...formData, gender: e.target.value })
               }
-              className="w-full px-4 py-2 bg-gray-700 rounded-md text-white"
+              className="w-full px-5 py-3 bg-gray-700 rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
               <option value="">Select gender</option>
               <option value="Male">Male</option>
@@ -161,7 +251,7 @@ export default function Contact() {
             </select>
           </div>
           <div>
-            <label className="block text-sm font-medium mb-1">
+            <label className="block text-lg font-medium mb-2">
               Contact Number
             </label>
             <input
@@ -170,26 +260,26 @@ export default function Contact() {
                 setFormData({ ...formData, contactNumber: e.target.value })
               }
               type="number"
-              className="w-full px-4 py-2 bg-gray-700 rounded-md text-white"
+              className="w-full px-5 py-3 bg-gray-700 rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="Enter your contact number"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium mb-1">Email</label>
+            <label className="block text-lg font-medium mb-2">Email</label>
             <input
               value={formData.email}
               onChange={(e) =>
                 setFormData({ ...formData, email: e.target.value })
               }
               type="email"
-              className="w-full px-4 py-2 bg-gray-700 rounded-md text-white"
+              className="w-full px-5 py-3 bg-gray-700 rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="Enter your email"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium mb-1">State</label>
+            <label className="block text-lg font-medium mb-2">State</label>
             <select
-              className="w-full px-4 py-2 bg-gray-700 rounded-md text-white"
+              className="w-full px-5 py-3 bg-gray-700 rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
               value={selectedState}
               onChange={(e) =>
                 handleStateChange(
@@ -206,9 +296,9 @@ export default function Contact() {
             </select>
           </div>
           <div>
-            <label className="block text-sm font-medium mb-1">City</label>
+            <label className="block text-lg font-medium mb-2">City</label>
             <select
-              className="w-full px-4 py-2 bg-gray-700 rounded-md text-white"
+              className="w-full px-5 py-3 bg-gray-700 rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
               disabled={!selectedState}
               value={formData.city}
               onChange={(e) =>
@@ -226,9 +316,9 @@ export default function Contact() {
             </select>
           </div>
           <div>
-            <label className="block text-sm font-medium mb-1">Message</label>
+            <label className="block text-lg font-medium mb-2">Message</label>
             <textarea
-              className="w-full px-4 py-2 bg-gray-700 resize-none rounded-md text-white"
+              className="w-full px-5 py-3 bg-gray-700 resize-none rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="Enter your message"
               rows={6}
               value={formData.address}
@@ -245,7 +335,7 @@ export default function Contact() {
               }}
               disabled={submitting}
               type="submit"
-              className="text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-xl px-8 py-2 text-center me-2 mb-2"
+              className="w-full py-3 text-xl font-medium text-white bg-gradient-to-br from-purple-600 to-blue-500 rounded-md hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300"
             >
               {submitting ? "Submitting..." : "Submit"}
             </button>
