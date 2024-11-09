@@ -84,7 +84,7 @@ export default function AnimatedTestimonialsDemo() {
         "Outstanding support and robust features. It's rare to find a product that delivers on all its promises.",
       name: "Ronit Bose",
       designation: "Blockchain Developer @ TJP",
-      src: "https://images.unsplash.com/photo-1636041293178-808a6762ab39?q=80&w=3464&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      src: "https://scontent.fccu3-1.fna.fbcdn.net/v/t39.30808-1/357498768_1927460760942901_8532340701160226773_n.jpg?stp=dst-jpg_s200x200&_nc_cat=106&ccb=1-7&_nc_sid=0ecb9b&_nc_ohc=IAT_S9Vl37MQ7kNvgFe62ml&_nc_zt=24&_nc_ht=scontent.fccu3-1.fna&_nc_gid=AoOHnbjStMQ2Mi4xJX24pNW&oh=00_AYCcvS2xePzGwyQ4369TWQT5J65iC_qOQUqVWWKwZDNB1Q&oe=67358229",
     },
   ];
 
