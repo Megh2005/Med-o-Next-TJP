@@ -1,25 +1,25 @@
-import type { Config } from "tailwindcss"
+import type { Config } from "tailwindcss";
 
 const config = {
-  darkMode: ["class"],
+  darkMode: ["class"], // Enabling dark mode with a class toggle
   content: [
-    './pages/**/*.{ts,tsx}',
-    './components/**/*.{ts,tsx}',
-    './app/**/*.{ts,tsx}',
-    './src/**/*.{ts,tsx}',
-	],
-  prefix: "",
+    "./pages/**/*.{ts,tsx}", // Including all pages with tsx/ts extension
+    "./components/**/*.{ts,tsx}", // Including all components with tsx/ts extension
+    "./app/**/*.{ts,tsx}", // Including all app-related tsx/ts files
+    "./src/**/*.{ts,tsx}", // Including src folder with tsx/ts files
+  ],
+  prefix: "", // Optional prefix for custom classes (leave as "" if not needed)
   theme: {
     container: {
-      center: true,
-      padding: "2rem",
+      center: true, // Ensures the container is centered
+      padding: "2rem", // Adding padding to the container
       screens: {
-        "2xl": "1400px",
+        "2xl": "1400px", // Defining custom breakpoint for 2xl screen size
       },
     },
     extend: {
       colors: {
-        border: "hsl(var(--border))",
+        border: "hsl(var(--border, #e0e0e0))", // Providing a fallback value for border color
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
@@ -54,9 +54,9 @@ const config = {
         },
       },
       borderRadius: {
-        lg: "var(--radius)",
-        md: "calc(var(--radius) - 2px)",
-        sm: "calc(var(--radius) - 4px)",
+        lg: "var(--radius)", // Using CSS custom property for large radius
+        md: "calc(var(--radius) - 2px)", // Custom medium radius
+        sm: "calc(var(--radius) - 4px)", // Custom small radius
       },
       keyframes: {
         "accordion-down": {
@@ -69,12 +69,12 @@ const config = {
         },
       },
       animation: {
-        "accordion-down": "accordion-down 0.2s ease-out",
-        "accordion-up": "accordion-up 0.2s ease-out",
+        "accordion-down": "accordion-down 0.2s ease-out", // Animation for accordion down
+        "accordion-up": "accordion-up 0.2s ease-out", // Animation for accordion up
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
-} satisfies Config
+  plugins: [require("tailwindcss-animate")], // Adding the animation plugin
+};
 
-export default config
+export default config;
