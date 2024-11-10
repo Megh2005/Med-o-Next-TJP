@@ -70,7 +70,7 @@ const Page = () => {
       title: "Med-o-Search",
       description:
         "Med-o-Search is an app that provides detailed information on medicines and diseases, including symptoms, dosage, side effects, and precautions, helping users access reliable health information easily.",
-      link: "https://example.com/emergency-support",
+      link: "#",
     },
   ];
 
