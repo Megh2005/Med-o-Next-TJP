@@ -40,7 +40,7 @@ export async function POST(req: NextRequest) {
     transaction.startTransaction();
 
     const genAI = new GoogleGenerativeAI(process.env.GOOGLE_AI_API_KEY!);
-    const model = genAI.getGenerativeModel({ model: "gemini-exp-1114" });
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash-8b" });
 
     const buffer = Buffer.from(await imgFile.arrayBuffer());
     const base64Data = buffer.toString("base64");
@@ -98,10 +98,7 @@ export async function POST(req: NextRequest) {
 
     const result = await model.generateContent([prompt, imagePart]);
     const content = JSON.parse(
-      result.response
-        .text()
-        .replace(/^\s*```json/, "")
-        .replace(/```$/, "")
+      result.response.text().replace(/```json\s*|\s*```/g, "")
     );
 
     if (content.error) {
