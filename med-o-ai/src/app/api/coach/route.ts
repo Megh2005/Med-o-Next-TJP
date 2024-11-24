@@ -38,7 +38,7 @@ export async function POST(req: NextRequest) {
     }
 
     const genAI = new GoogleGenerativeAI(process.env.GOOGLE_AI_API_KEY!);
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+    const model = genAI.getGenerativeModel({ model: "gemini-exp-1114" });
 
     const prompt = `
         You are a lifestyle and health coach. Based on the information provided, give specific recommendations for managing health and wellness for a ${userInfo.age}-year-old ${userInfo.gender} who has been diagnosed with ${userInfo.disease}. 

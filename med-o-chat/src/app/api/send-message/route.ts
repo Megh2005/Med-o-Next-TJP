@@ -41,7 +41,7 @@ export async function POST(req: CustomRequest) {
       const genAI = new GoogleGenerativeAI(
         process.env.NEXT_PUBLIC_GEMINI_API_KEY!
       );
-      const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+      const model = genAI.getGenerativeModel({ model: "gemini-exp-1114" });
 
       const prompt = `Translate the following text from ${source_lang} to ${target_lang} and only include the translated text: ${content}`;
 
