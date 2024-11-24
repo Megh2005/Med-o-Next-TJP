@@ -1,13 +1,14 @@
 "use client";
 
 import { TextGenerateEffect } from "@/components/ui/text-generate-effect";
-import { useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { IconUpload } from "@tabler/icons-react";
 import axios, { isAxiosError } from "axios";
 import { Card, CardTitle } from "@/components/ui/card-hover-effect";
 import { PrescriptionContent } from "@/interfaces/Prescription";
 import { useQueryClient } from "react-query";
+import { toPng } from "html-to-image";
 
 const mainVariant = {
   initial: {
@@ -47,11 +48,22 @@ const Lens = () => {
     setFile(newFiles[0]);
   };
 
-  /*  async function handleMint() {
-    if(!ref.current) return;
-    const dataUrl = await toPng(ref.current, { cacheBust: true });
-    console.log("Data URL generated:", dataUrl);
-  }  */
+  const downloadPrescription = useCallback(() => {
+    if (ref.current === null) {
+      return;
+    }
+
+    toPng(ref.current, { cacheBust: true })
+      .then((dataUrl) => {
+        const link = document.createElement("a");
+        link.download = `${content?.title}-${Date.now()}.png`;
+        link.href = dataUrl;
+        link.click();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [ref]);
 
   const submitPrescription = async () => {
     if (!file) return;
@@ -207,6 +219,17 @@ const Lens = () => {
                 className="text-white text-xl md:text-2xl text-center mb-6"
                 words="Prescription Summary"
               />
+              <div className="my-6 flex justify-center">
+                <button
+                  onClick={downloadPrescription}
+                  className="hover:-translate-y-1 transition duration-150 ease-in-out z-50 relative inline-flex h-12 overflow-hidden rounded-full p-[1px] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50"
+                >
+                  <span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)]" />
+                  <span className="gap-2 inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full bg-slate-950 px-3 py-1 text-sm font-medium text-white backdrop-blur-3xl">
+                    Download Summary
+                  </span>
+                </button>
+              </div>
               <div ref={ref}>
                 {content.medicines.map((medicine) => (
                   <Card key={medicine.name}>

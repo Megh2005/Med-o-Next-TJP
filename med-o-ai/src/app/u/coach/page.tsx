@@ -8,8 +8,9 @@ import {
 import { TextGenerateEffect } from "@/components/ui/text-generate-effect";
 import { HealthRecommendationContent } from "@/interfaces/HealthRecommendation";
 import axios from "axios";
-import React, { useRef, useState } from "react";
+import React, { useCallback, useRef, useState } from "react";
 import { useQueryClient } from "react-query";
+import { toPng } from "html-to-image";
 
 const Coach = () => {
   const [loading, setLoading] = useState(false);
@@ -24,11 +25,22 @@ const Coach = () => {
   const queryClient = useQueryClient();
   const ref = useRef<HTMLDivElement>(null);
 
-  /*  async function handleMint() {
-    if(!ref.current) return;
-    const dataUrl = await toPng(ref.current, { cacheBust: true });
-    console.log("Data URL generated:", dataUrl);
-  }  */
+  const downloadRecommendation = useCallback(() => {
+    if (ref.current === null) {
+      return;
+    }
+
+    toPng(ref.current, { cacheBust: true })
+      .then((dataUrl) => {
+        const link = document.createElement("a");
+        link.download = `${result?.title}-${Date.now()}.png`;
+        link.href = dataUrl;
+        link.click();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [ref]);
 
   const submitData = async () => {
     if (
@@ -169,6 +181,17 @@ const Coach = () => {
       )}
       {result && (
         <div className="w-full max-w-3xl mx-auto my-6">
+          <div className="my-6 flex justify-center">
+            <button
+              onClick={downloadRecommendation}
+              className="hover:-translate-y-1 transition duration-150 ease-in-out z-50 relative inline-flex h-12 overflow-hidden rounded-full p-[1px] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50"
+            >
+              <span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)]" />
+              <span className="gap-2 inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full bg-slate-950 px-3 py-1 text-sm font-medium text-white backdrop-blur-3xl">
+                Download Recommendation
+              </span>
+            </button>
+          </div>
           <div ref={ref}>
             <Card>
               <CardTitle className="text-2xl text-white">
