@@ -8,7 +8,7 @@ import {
 import { TextGenerateEffect } from "@/components/ui/text-generate-effect";
 import { HealthRecommendationContent } from "@/interfaces/HealthRecommendation";
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { useQueryClient } from "react-query";
 
 const Coach = () => {
@@ -22,6 +22,13 @@ const Coach = () => {
   });
   const [result, setResult] = useState<HealthRecommendationContent>();
   const queryClient = useQueryClient();
+  const ref = useRef<HTMLDivElement>(null);
+
+  /*  async function handleMint() {
+    if(!ref.current) return;
+    const dataUrl = await toPng(ref.current, { cacheBust: true });
+    console.log("Data URL generated:", dataUrl);
+  }  */
 
   const submitData = async () => {
     if (
@@ -162,38 +169,40 @@ const Coach = () => {
       )}
       {result && (
         <div className="w-full max-w-3xl mx-auto my-6">
-          <Card>
-            <CardTitle className="text-2xl text-white">
-              {result.title}
-            </CardTitle>
-            <CardDescription className="text-white text-base">
-              {result.introduction}
-            </CardDescription>
-            <div>
-              {result.sections.map((section, index) => (
-                <div key={index} className="my-4">
-                  <h1 className="text-2xl font-bold bg-white text-black px-2 w-max rounded-sm">
-                    {section.title}
-                  </h1>
-                  {section.items.map((item, index) => (
-                    <div key={index} className="my-4">
-                      <TextGenerateEffect
-                        words={item.subtitle}
-                        duration={0.9}
-                        className="list-item list-disc ml-4 text-white text-lg font-bold"
-                      />
-                      <p className="text-neutral-200 text-base">
-                        {item.description}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-              ))}
-            </div>
-            <div className="my-2">
-              <p className="text-purple-300 font-bold">* {result.note}</p>
-            </div>
-          </Card>
+          <div ref={ref}>
+            <Card>
+              <CardTitle className="text-2xl text-white">
+                {result.title}
+              </CardTitle>
+              <CardDescription className="text-white text-base">
+                {result.introduction}
+              </CardDescription>
+              <div>
+                {result.sections.map((section, index) => (
+                  <div key={index} className="my-4">
+                    <h1 className="text-2xl font-bold bg-white text-black px-2 w-max rounded-sm">
+                      {section.title}
+                    </h1>
+                    {section.items.map((item, index) => (
+                      <div key={index} className="my-4">
+                        <TextGenerateEffect
+                          words={item.subtitle}
+                          duration={0.9}
+                          className="list-item list-disc ml-4 text-white text-lg font-bold"
+                        />
+                        <p className="text-neutral-200 text-base">
+                          {item.description}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                ))}
+              </div>
+              <div className="my-2">
+                <p className="text-purple-300 font-bold">* {result.note}</p>
+              </div>
+            </Card>
+          </div>
         </div>
       )}
     </div>

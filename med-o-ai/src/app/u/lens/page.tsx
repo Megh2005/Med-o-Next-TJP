@@ -36,6 +36,7 @@ const Lens = () => {
   const [error, setError] = useState<string>("");
   const [content, setContent] = useState<PrescriptionContent | null>(null);
   const queryClient = useQueryClient();
+  const ref = useRef<HTMLDivElement>(null);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
   const handleClick = () => {
@@ -45,6 +46,12 @@ const Lens = () => {
   const handleFileChange = (newFiles: File[]) => {
     setFile(newFiles[0]);
   };
+
+  /*  async function handleMint() {
+    if(!ref.current) return;
+    const dataUrl = await toPng(ref.current, { cacheBust: true });
+    console.log("Data URL generated:", dataUrl);
+  }  */
 
   const submitPrescription = async () => {
     if (!file) return;
@@ -194,65 +201,67 @@ const Lens = () => {
       {(error || content) && (
         <div className="my-6">
           {content && (
-            <div className="max-w-3xl mx-auto w-full space-y-6">
+            <div className="max-w-3xl mx-auto w-full">
               <TextGenerateEffect
                 duration={0.9}
-                className="text-white text-xl md:text-2xl text-center"
+                className="text-white text-xl md:text-2xl text-center mb-6"
                 words="Prescription Summary"
               />
-              {content.medicines.map((medicine) => (
-                <Card key={medicine.name}>
-                  <CardTitle>
-                    {" "}
-                    <TextGenerateEffect
-                      duration={0.9}
-                      className="text-green-500 text-2xl md:text-3xl"
-                      words={medicine.name}
-                    />
-                  </CardTitle>
-                  <div className="mt-6 space-y-4">
-                    <div className="space-y-2">
-                      <p className="text-neutral-200 text-lg underline underline-offset-4">
-                        Uses:
-                      </p>
+              <div ref={ref}>
+                {content.medicines.map((medicine) => (
+                  <Card key={medicine.name}>
+                    <CardTitle>
+                      {" "}
                       <TextGenerateEffect
                         duration={0.9}
-                        className="text-white text-base"
-                        words={medicine.details.uses}
+                        className="text-green-500 text-2xl md:text-3xl"
+                        words={medicine.name}
                       />
+                    </CardTitle>
+                    <div className="mt-6 space-y-4">
+                      <div className="space-y-2">
+                        <p className="text-neutral-200 text-lg underline underline-offset-4">
+                          Uses:
+                        </p>
+                        <TextGenerateEffect
+                          duration={0.9}
+                          className="text-white text-base"
+                          words={medicine.details.uses}
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <p className="text-neutral-200 text-lg underline underline-offset-4">
+                          Side Effects:
+                        </p>
+                        <ul className="">
+                          {medicine.details.sideEffects.map((effect) => (
+                            <li
+                              className="list-disc text-white ml-6"
+                              key={effect}
+                            >
+                              <TextGenerateEffect
+                                duration={0.9}
+                                className="text-white text-base"
+                                words={effect}
+                              />
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                      <div className="space-y-2">
+                        <p className="text-neutral-200 text-lg underline underline-offset-4">
+                          Safety Advice:
+                        </p>
+                        <TextGenerateEffect
+                          duration={0.9}
+                          className="text-white text-base"
+                          words={medicine.details.safetyAdvice}
+                        />
+                      </div>
                     </div>
-                    <div className="space-y-2">
-                      <p className="text-neutral-200 text-lg underline underline-offset-4">
-                        Side Effects:
-                      </p>
-                      <ul className="">
-                        {medicine.details.sideEffects.map((effect) => (
-                          <li
-                            className="list-disc text-white ml-6"
-                            key={effect}
-                          >
-                            <TextGenerateEffect
-                              duration={0.9}
-                              className="text-white text-base"
-                              words={effect}
-                            />
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                    <div className="space-y-2">
-                      <p className="text-neutral-200 text-lg underline underline-offset-4">
-                        Safety Advice:
-                      </p>
-                      <TextGenerateEffect
-                        duration={0.9}
-                        className="text-white text-base"
-                        words={medicine.details.safetyAdvice}
-                      />
-                    </div>
-                  </div>
-                </Card>
-              ))}
+                  </Card>
+                ))}
+              </div>
             </div>
           )}
           {error && <p className="text-red-500 text-sm">{error}</p>}

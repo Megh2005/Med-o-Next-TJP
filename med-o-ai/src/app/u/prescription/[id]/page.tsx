@@ -10,12 +10,13 @@ import {
 import axios from "axios";
 import Image from "next/image";
 import { useParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useQuery } from "react-query";
 
 const PrescriptionPage = () => {
   const { id } = useParams();
   const [content, setContent] = useState<PrescriptionContent>();
+  const ref = useRef<HTMLDivElement>(null);
 
   const { data, isLoading, status } = useQuery<PrescriptionData>({
     queryKey: ["prescription", id],
@@ -30,6 +31,12 @@ const PrescriptionPage = () => {
     if (!data) return;
     setContent(JSON.parse(data.content) as PrescriptionContent);
   }, [data]);
+
+  /*  async function handleMint() {
+    if(!ref.current) return;
+    const dataUrl = await toPng(ref.current, { cacheBust: true });
+    console.log("Data URL generated:", dataUrl);
+  }  */
 
   if (isLoading)
     return (
@@ -57,7 +64,7 @@ const PrescriptionPage = () => {
                 className="rounded-md bg-cover"
               />
             </div>
-            <div className="space-y-4 bg-black z-20">
+            <div ref={ref} className="space-y-4 bg-black z-20">
               {content.medicines.map((medicine) => (
                 <Card key={medicine.name}>
                   <CardTitle>
