@@ -58,10 +58,10 @@ const Navbar = () => {
       </ul>
 
       {/* Mobile Hamburger Menu */}
-      <div className="md:hidden">
+      <div className="md:hidden bg-black">
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="text-white focus:outline-none"
+          className="text-white bg-black focus:outline-none text-2xl"
         >
           {isOpen ? "✖" : "☰"}
         </button>
@@ -69,7 +69,7 @@ const Navbar = () => {
 
       {/* Mobile Menu */}
       {isOpen && (
-        <ul className="md:hidden absolute top-16 left-0 w-full bg-black text-white space-y-4 p-4">
+        <ul className="md:hidden absolute top-16 left-0 w-full bg-black bg-opacity-100 text-white space-y-4 p-4 z-10">
           {navItems.map((item) => (
             <li key={item.name}>
               <a href={item.link} className="flex items-center space-x-2">
@@ -87,24 +87,25 @@ const Navbar = () => {
 export default function HeroHighlightDemo() {
   return (
     <div className="flex flex-col min-h-screen">
-      <Navbar /> {/* Add the Navbar here */}
+      <Navbar  />
       <HeroHighlight>
         <h1 className="text-2xl px-4 md:text-4xl lg:text-5xl font-bold text-neutral-700 dark:text-white max-w-4xl leading-relaxed lg:leading-snug text-center mx-auto ">
-          Welcome to
+          Welcome To
           <br />
           <Highlight className="text-black dark:text-white">
             Tech Janta Party
           </Highlight>
         </h1>
         <div className="flex flex-col items-center justify-center">
-          <p className="text-balance text-center max-w-xl text-xl my-4">
-            {" "}
+          <p className="text-balance text-center text-xl my-4">
             We&apos;re a dynamic team of tech enthusiasts and problem-solvers
             united by a shared vision: to build innovative, accessible, and
-            people-focused digital solutions. Comprising Megh Deb as our Team
-            Lead, Subham Mani as our Web Developer, Sayambar Roy Chowdhury as
-            our AI/ML Developer, and Ronit Bose as our Backend and Web3
-            Developer, we bring diverse expertise and passion for making
+            people-focused digital solutions. Comprising{" "}
+            <Highlight>Megh Deb</Highlight> as our Team Lead,{" "}
+            <Highlight>Subham Mani</Highlight> as our Web Developer,{" "}
+            <Highlight>Sayambar Roy Chowdhury</Highlight> as our AI/ML
+            Developer, and <Highlight>Ronit Bose</Highlight> as our Backend and
+            Web3 Developer, we bring diverse expertise and passion for making
             technology work for everyone.
           </p>
           <p className="text-xl text-center my-4 max-w-5xl">

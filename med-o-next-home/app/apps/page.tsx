@@ -62,13 +62,15 @@ const Page = () => {
     },
     {
       title: "Med-o-AI",
-      description: "Get instant answers to medical queries with our AI-driven assistant.Extensive knowledge base for reliable and accurate medical information.Personalize the AI responses based on user health history and preferences.",
-      link: "https://example.com/consultation-services",
+      description:
+        "Get instant answers to medical queries with our AI-driven assistant.Extensive knowledge base for reliable and accurate medical information.Personalize the AI responses based on user health history and preferences.",
+      link: "http://med-o-ai.vercel.app",
     },
     {
-      title: "Emergency Support",
-      description: "Access immediate support during medical emergencies.",
-      link: "https://example.com/emergency-support",
+      title: "Med-o-Search",
+      description:
+        "Med-o-Search is an app that provides detailed information on medicines and diseases, including symptoms, dosage, side effects, and precautions, helping users access reliable health information easily.",
+      link: "#",
     },
   ];
 
@@ -109,7 +111,6 @@ const Page = () => {
             <Link
               key={index}
               href={item.link}
-              target="_blank"
               className="flex items-center gap-2 text-white"
             >
               {item.icon}
