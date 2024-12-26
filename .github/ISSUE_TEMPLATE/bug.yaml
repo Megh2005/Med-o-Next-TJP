@@ -1,0 +1,40 @@
+name: Issue Template
+description: Please use this template to file issues.
+title: "[Issue]"
+labels: bug
+body:
+  - type: input
+    id: name
+    attributes:
+      label: Your Name
+      description: Please enter your name.
+      required: true
+  - type: input
+    id: github_id
+    attributes:
+      label: Your GitHub User ID
+      description: Please enter your GitHub username.
+      required: true
+  - type: dropdown
+    id: issue_folder
+    attributes:
+      label: Issue Folder
+      description: Select the folder related to this issue.
+      options:
+        - med-o-ai
+        - med-o-chat
+        - med-o-next home
+        - med-o-shop
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: Issue Description
+      description: Please describe the issue in detail.
+      required: true
+  - type: checkbox
+    id: agree_terms
+    attributes:
+      label: Agreement
+      description: I agree to the terms and conditions of contributing to this project.
+      required: true
