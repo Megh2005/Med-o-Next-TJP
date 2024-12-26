@@ -19,16 +19,16 @@ body:
       placeholder: johndoe123
       required: true
 
-  - type: dropdown
+  - type: checkboxes
     id: issue_folder
     attributes:
       label: Issue Folder
-      description: Select the folder related to this issue.
+      description: Select the folder(s) related to this issue.
       options:
-        - med-o-ai
-        - med-o-chat
-        - med-o-next home
-        - med-o-shop
+        - label: med-o-ai
+        - label: med-o-chat
+        - label: med-o-next home
+        - label: med-o-shop
       required: true
 
   - type: textarea
