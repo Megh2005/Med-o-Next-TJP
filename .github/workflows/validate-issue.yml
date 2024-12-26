@@ -1,0 +1,18 @@
+name: Validate Issue Template
+
+on:
+  issues:
+    types:
+      - opened
+      - edited
+
+jobs:
+  validate-template:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check Issue Template
+      if: github.event.issue.body == null || !github.event.issue.body.contains('Your Name')
+      run: |
+        echo "::error::The issue does not follow the required template. Please fill out all fields."
+        exit 1
