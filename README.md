@@ -48,6 +48,7 @@ Introducing MED-O-NEXT, a groundbreaking all-in-one medical web app designed to 
   - Automatically detects the user's preferred language based on browser settings.
   - Option for manual selection of language with seamless transition across all app features.
 - **Accessibility-First Design**: :wheelchair:
+
   - Fully compatible with assistive technologies like screen readers (NVDA, JAWS).
   - High-contrast themes and font size adjustment for users with visual impairments.
   - Voice command capabilities for users with limited mobility.
@@ -85,38 +86,8 @@ Introducing MED-O-NEXT, a groundbreaking all-in-one medical web app designed to 
   <br />
   ![](https://skillicons.dev/icons?i=vscode)
 
-## Our Team :busts_in_silhouette:
+## Contributors 🙍
 
-- **_Team Name_** : **Tech Janta Party**
-
-&nbsp;
-
-- **_Team Members_** :
-   <table>
-<tr>
-  <td align="center">
-   <a href="https://github.com/Sayambar2004/">
-    <img style="height: 80px; width:80px;" src="https://avatars.githubusercontent.com/Sayambar2004"/><br />
-    <sub><b>Sayambar RC</b></sub>
-   </a>
- </td>
-  <td align="center">
-   <a href="https://github.com/Megh2005/">
-    <img style="height: 80px; width:80px;" src="https://avatars.githubusercontent.com/Megh2005"/><br />
-    <sub><b>Megh Deb</b></sub>
-   </a>
- </td>
-  <td align="center">
-   <a href="https://github.com/iSubhamMani/">
-    <img style="height: 80px; width:80px;" src="https://avatars.githubusercontent.com/iSubhamMani"/><br />
-    <sub><b>Subham Mani</b></sub>
-   </a>
- </td>
-  <td align="center">
-   <a href="https://github.com/rbose3">
-    <img style="height: 80px; width:80px;" src="https://avatars.githubusercontent.com/rbose3"/><br />
-    <sub><b>Ronit Bose</b></sub>
-   </a>
- </td>
-</tr>
-</table>
+<a href="https://github.com/Megh2005/Med-o-Next-TJP/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=Megh2005/Med-o-Next-TJP" />
+</a>
