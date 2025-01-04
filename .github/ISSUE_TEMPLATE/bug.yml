@@ -65,8 +65,8 @@ body:
       description: "Check the boxes that apply to your issue."
       options:
         - label: "SWOC 2024-25"
-        - label: "Checked The Pinned Issue"
         - label: "Read https://github.com/Megh2005/Med-o-Next-TJP/blob/main/CONTRIBUTING.md"
+        - label: "Starred the repository"
     validations:
       required: true
 
