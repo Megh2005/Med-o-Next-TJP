@@ -1,5 +1,4 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Signin from "./pages/SignIn";
 import { Toaster } from "react-hot-toast";
 import { Provider } from "react-redux";
 import Signup from "./pages/Signup";
@@ -18,6 +17,7 @@ import appStore from "./lib/redux/appStore";
 import Home from "./pages/Home";
 import OrderSuccess from "./pages/OrderSuccessfull";
 import OrderFailure from "./pages/OrderFailure";
+import ProtectedRoute from "./pages/ProtectedRoute";
 
 function App() {
   const appRouter = createBrowserRouter([
@@ -26,16 +26,13 @@ function App() {
       element: <Home />,
     },
     {
-      path: "/signin",
-      element: <Signin />,
-    },
-    {
       path: "/signup",
       element: <Signup />,
     },
     {
       path: "/admin",
-      element: <AdminRoot />,
+      element: (
+      <ProtectedRoute><AdminRoot /></ProtectedRoute>),
       children: [
         {
           path: "/admin",
@@ -53,7 +50,11 @@ function App() {
     },
     {
       path: "/u",
-      element: <UserRoot />,
+      element: (
+        <ProtectedRoute>
+        <UserRoot />
+        </ProtectedRoute>
+    ),
       children: [
         {
           path: "/u/home",
@@ -83,11 +84,12 @@ function App() {
     },
     {
       path: "/payment/success",
-      element: <OrderSuccess />,
+      element: (
+        <ProtectedRoute><OrderSuccess/></ProtectedRoute>),
     },
     {
       path: "/payment/failure",
-      element: <OrderFailure />,
+      element: ( <ProtectedRoute><OrderFailure/></ProtectedRoute>),
     },
   ]);
 

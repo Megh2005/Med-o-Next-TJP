@@ -1,191 +1,112 @@
-import signupSchema from "@/lib/schemas/signup.schema";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import { Button } from "@/components/ui/button";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import axios from "axios";
-import toast from "react-hot-toast";
-import { useState } from "react";
-import { LoaderCircle } from "lucide-react";
-import { Link, useNavigate } from "react-router-dom";
-import { BACKEND_URL } from "@/utils/constants";
+import { SignUp, useAuth } from "@clerk/clerk-react";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { motion } from "framer-motion";
 
-const Signup = () => {
-  const [submiting, setSubmiting] = useState(false);
-  const router = useNavigate();
+const SignUpPage = () => {
+  const navigate = useNavigate();
+  const { isSignedIn, isLoaded } = useAuth();
 
-  const form = useForm<z.infer<typeof signupSchema>>({
-    resolver: zodResolver(signupSchema),
-    defaultValues: {
-      name: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
-      phoneNumber: "",
-    },
-  });
-
-  async function onSubmit(data: z.infer<typeof signupSchema>) {
-    try {
-      setSubmiting(true);
-      const response = await axios.post(
-        `${BACKEND_URL}/api/v1/auth/signup`,
-        data
-      );
-      if (response.data?.success) {
-        toast.success("Account created successfully!", {
-          duration: 4000,
-          position: "top-center",
-        });
-
-        router("/signin");
-      }
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        console.log(error);
-        toast.error("Error creating Account", {
-          duration: 4000,
-          position: "top-center",
-        });
-      } else {
-        toast.error("Something went wrong. Please try again", {
-          duration: 4000,
-          position: "top-center",
-        });
-      }
-    } finally {
-      setSubmiting(false);
+  useEffect(() => {
+    if (isLoaded && isSignedIn) {
+      navigate("/u/home");
     }
-  }
+  }, [isSignedIn, isLoaded, navigate]);
+
+  const containerVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.6,
+        when: "beforeChildren",
+        staggerChildren: 0.2
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.4 }
+    }
+  };
 
   return (
-    <div className="flex min-h-[100dvh] flex-col items-center justify-center bg-background px-4 py-12 sm:px-6 lg:px-8">
-      <div className="mx-auto flex flex-col w-full max-w-[900px] items-center justify-between gap-12 rounded-xl bg-card p-6 shadow-lg md:flex-row">
-        <div className="flex-1 space-y-4">
-          <h1 className="text-3xl font-bold tracking-tighter text-foreground sm:text-4xl md:text-5xl">
-            Sign up for <p className="text-primary">Med-o-Shop</p>
+    <div className="flex min-h-[100dvh] flex-col items-center justify-center bg-slate-50 px-4 py-12 sm:px-6 lg:px-8">
+      <motion.div
+        initial="hidden"
+        animate="visible"
+        variants={containerVariants}
+        className="mx-auto flex flex-col w-full max-w-[900px] items-center justify-between gap-12 rounded-xl bg-white p-8 shadow-xl md:flex-row"
+      >
+        <motion.div 
+          variants={itemVariants}
+          className="flex-1 space-y-6"
+        >
+          <h1 className="text-3xl font-bold tracking-tighter text-slate-800 sm:text-4xl md:text-5xl">
+            Welcome to
+            <span className="block text-primary mt-1">Med-o-Shop</span>
           </h1>
-          <p className="text-muted-foreground md:text-xl">
-            Discover a wide range of high-quality products and healthcare
-            products delivered right to your doorstep.
+          <p className="text-slate-600 text-lg md:text-xl">
+            Discover a wide range of high-quality healthcare products delivered right to your doorstep.
           </p>
-          <ul className="space-y-2 text-muted-foreground">
-            <li className="flex items-center gap-2">
-              <CheckIcon className="h-5 w-5 text-primary" />
-              Fast and reliable delivery
-            </li>
-            <li className="flex items-center gap-2">
-              <CheckIcon className="h-5 w-5 text-primary" />
-              Secure and confidential transactions
-            </li>
-            <li className="flex items-center gap-2">
-              <CheckIcon className="h-5 w-5 text-primary" />
-              Wide selection of products and healthcare products
-            </li>
-          </ul>
-        </div>
-        <div className="w-full max-w-md space-y-4 rounded-lg bg-background p-6 shadow-lg">
-          <h2 className="text-2xl font-bold">Create an account</h2>
-          <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-              <FormField
-                control={form.control}
-                name="name"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Name</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Enter your name" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="email"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Email</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Enter your email" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="phoneNumber"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Phone Number</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Enter your phone number" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="password"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Password</FormLabel>
-                    <FormControl>
-                      <Input
-                        type="password"
-                        placeholder="Enter a password"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="confirmPassword"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Confirm Password</FormLabel>
-                    <FormControl>
-                      <Input
-                        type="password"
-                        placeholder="Enter the password again"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <Button type="submit" disabled={submiting}>
-                {submiting && (
-                  <LoaderCircle className="animate-spin mr-2 h-5 w-5" />
-                )}
-                Submit
-              </Button>
-            </form>
-          </Form>
-          <p className="text-muted-foreground">
-            Already have an account?{" "}
-            <Link className="text-primary font-medium" to="/signin">
-              Sign in
-            </Link>
-          </p>
-        </div>
-      </div>
+          <motion.ul className="space-y-4 text-slate-600">
+            {[
+              "Fast and reliable delivery",
+              "Secure and confidential transactions",
+              "Wide selection of products and healthcare products"
+            ].map((item, index) => (
+              <motion.li
+                key={index}
+                variants={itemVariants}
+                className="flex items-center gap-3"
+              >
+                <CheckIcon className="h-5 w-5 text-primary" />
+                <span className="text-lg">{item}</span>
+              </motion.li>
+            ))}
+          </motion.ul>
+        </motion.div>
+
+        <motion.div
+          variants={itemVariants} 
+          className="w-full max-w-md space-y-6 rounded-lg bg-slate-50 p-8 shadow-lg border border-slate-100"
+        >
+          <h2 className="text-2xl font-bold text-slate-800 mb-6">Get Started Today</h2>
+          <SignUp
+            afterSignUpUrl="/u/home"
+            appearance={{
+              elements: {
+                formButtonPrimary: 
+                  "w-full bg-primary hover:bg-primary/90 text-primary-foreground py-3 rounded-lg transition-all duration-200 font-medium shadow-md hover:shadow-lg",
+                socialButtonsBlockButton: 
+                  "w-full flex items-center justify-center gap-3 rounded-lg border border-slate-200 bg-white px-4 py-3 text-slate-700 hover:bg-slate-50 hover:border-slate-300 transition-all duration-200 font-medium shadow-sm hover:shadow-md",
+                socialButtonsProviderIcon: "h-6 w-6",
+                card: "w-full shadow-none p-0 bg-transparent",
+                headerTitle: "hidden",
+                headerSubtitle: "hidden",
+                dividerLine: "bg-slate-200",
+                dividerText: "text-slate-500 font-medium",
+                formFieldInput: 
+                  "flex h-11 w-full rounded-lg border border-slate-200 bg-white px-4 py-2 text-slate-800 shadow-sm transition-colors duration-200 placeholder:text-slate-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30 focus-visible:border-primary",
+                formFieldLabel: 
+                  "text-sm font-medium text-slate-700 mb-1",
+                formFieldErrorText: 
+                  "text-sm font-medium text-red-500 mt-1",
+                footer: "hidden"
+              },
+              layout: {
+                socialButtonsPlacement: "top",
+                showOptionalFields: false,
+              },
+            }}
+          />
+        </motion.div>
+      </motion.div>
     </div>
   );
 };
@@ -209,4 +130,4 @@ function CheckIcon(props: React.SVGProps<SVGSVGElement>) {
   );
 }
 
-export default Signup;
+export default SignUpPage;
