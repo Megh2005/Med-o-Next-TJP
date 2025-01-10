@@ -4,49 +4,27 @@ on:
   pull_request:
     types: [closed]
 
-permissions:
-  issues: write
-  pull-requests: read
-
 jobs:
   close-issues:
     runs-on: ubuntu-latest
-    if: github.event.pull_request.merged == true
 
     steps:
-      - name: Close linked issues
-        uses: actions/github-script@v7
-        with:
-          script: |
-            const prBody = context.payload.pull_request.body || '';
-            const prNumber = context.payload.pull_request.number;
-            
-            // Find issue references using regex
-            const issueRefs = prBody.match(/#(\d+)/g) || [];
-            
-            for (const ref of issueRefs) {
-              const issueNumber = ref.substring(1);
-              console.log(`Processing issue #${issueNumber}`);
-              
-              try {
-                await github.rest.issues.createComment({
-                  owner: context.repo.owner,
-                  repo: context.repo.name,
-                  issue_number: parseInt(issueNumber),
-                  body: `🔗 This issue has been closed automatically because it was linked to pull request #${prNumber} which has been merged.\n\nIf you believe this issue still needs attention, please reopen it or create a new issue with additional details.`
-                });
-                
-                // Close the issue
-                await github.rest.issues.update({
-                  owner: context.repo.owner,
-                  repo: context.repo.name,
-                  issue_number: parseInt(issueNumber),
-                  state: 'closed',
-                  state_reason: 'completed'
-                });
-                
-                console.log(`Successfully closed issue #${issueNumber}`);
-              } catch (error) {
-                console.error(`Error processing issue #${issueNumber}:`, error);
-              }
-            }
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Close linked issues
+      if: github.event.pull_request.merged == true
+      run: |
+        ISSUES=$(jq -r '.pull_request.body' "$GITHUB_EVENT_PATH" | grep -Eo '#[0-9]+' | tr -d '#')
+        for ISSUE in $ISSUES
+        do
+          echo "Closing issue #$ISSUE"
+          curl -X POST -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+               -H "Accept: application/vnd.github.v3+json" \
+               https://api.github.com/repos/${{ github.repository }}/issues/$ISSUE/comments \
+               -d '{"body":"Closed by PR #${{ github.event.pull_request.number }}"}'
+          curl -X PATCH -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+               -H "Accept: application/vnd.github.v3+json" \
+               https://api.github.com/repos/${{ github.repository }}/issues/$ISSUE \
+               -d '{"state":"closed"}'
+        done
