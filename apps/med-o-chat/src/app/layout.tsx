@@ -4,6 +4,8 @@ import "./globals.css";
 import StoreProvider from "./StoreProvider";
 import AuthProvider from "./AuthProvider";
 import { Toaster } from "react-hot-toast";
+import { ThemeProvider } from "@/components/theme-provider";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,12 +21,15 @@ export default function RootLayout({
 }>) {
   return (
     <StoreProvider>
-      <html lang="en">
-        <body className={inter.className}>
-          <AuthProvider>
-            <Toaster />
-            {children}
-          </AuthProvider>
+      <html lang="en" suppressHydrationWarning>
+        <body className={`${inter.className} bg-background text-foreground`}>
+          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+            <AuthProvider>
+              <ThemeToggle />
+              <Toaster />
+              {children}
+            </AuthProvider>
+          </ThemeProvider>
         </body>
       </html>
     </StoreProvider>
